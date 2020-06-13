@@ -1,4 +1,4 @@
-﻿namespace MySocialMedia.Server.Infrastructure
+﻿namespace MySocialMedia.Server.Infrastructure.Extensions
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;

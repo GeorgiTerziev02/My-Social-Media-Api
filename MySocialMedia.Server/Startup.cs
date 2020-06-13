@@ -2,12 +2,10 @@ namespace MySocialMedia.Server
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.EntityFrameworkCore;
-    using MySocialMedia.Server.Data;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using MySocialMedia.Server.Infrastructure;
+    using MySocialMedia.Server.Infrastructure.Extensions;
 
     public class Startup
     {
@@ -28,7 +26,7 @@ namespace MySocialMedia.Server
                 .AddJwtAuthentication(appSettings)
                 .AddApplicationServices()
                 .AddSwagger()
-                .AddControllers();
+                .AddApiControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

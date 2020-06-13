@@ -1,11 +1,13 @@
 ﻿namespace MySocialMedia.Server.Features.Posts
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MySocialMedia.Server.Features.Posts.Models;
-    using MySocialMedia.Server.Infrastructure;
+    using MySocialMedia.Server.Infrastructure.Extensions;
 
+    [Authorize]
     public class PostsController : ApiController
     {
         private readonly IPostsService postsService;
@@ -15,7 +17,19 @@
             this.postsService = postsService;
         }
 
-        [Authorize]
+        [HttpGet]
+        public async Task<IEnumerable<PostListingServiceModel>> MyPosts()
+        {
+            var userId = this.User.GetId();
+
+            return await this.postsService.PostsByUser(userId);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<PostDetailsServiceModel>> Details(int id)
+           => await this.postsService.Details(id);
+
         [HttpPost]
         public async Task<ActionResult> Create(CreatePostRequestModel model)
         {

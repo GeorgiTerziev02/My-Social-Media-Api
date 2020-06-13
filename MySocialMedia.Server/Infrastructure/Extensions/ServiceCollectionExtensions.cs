@@ -1,4 +1,4 @@
-﻿namespace MySocialMedia.Server.Infrastructure
+﻿namespace MySocialMedia.Server.Infrastructure.Extensions
 {
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
@@ -11,6 +11,7 @@
     using MySocialMedia.Server.Data.Models;
     using MySocialMedia.Server.Features.Identity;
     using MySocialMedia.Server.Features.Posts;
+    using MySocialMedia.Server.Infrastructure.Filters;
     using System.Text;
 
     public static class ServiceCollectionExtensions
@@ -94,5 +95,11 @@
                          "v1",
                          new OpenApiInfo { Title = "My Social Media API", Version = "v1" });
                  });
+
+        public static void AddApiControllers(this IServiceCollection services)
+            => services
+                .AddControllers(options => options
+                    .Filters
+                    .Add<ModelOrNotFoundActionFilter>());
     }
 }
