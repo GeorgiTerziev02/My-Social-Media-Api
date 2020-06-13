@@ -1,4 +1,4 @@
-﻿namespace MySocialMedia.Server.Features.Identity.Posts
+﻿namespace MySocialMedia.Server.Features.Posts
 {
     using MySocialMedia.Server.Data;
     using MySocialMedia.Server.Data.Models;

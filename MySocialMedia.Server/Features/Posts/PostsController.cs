@@ -3,7 +3,6 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using MySocialMedia.Server.Features.Identity.Posts;
     using MySocialMedia.Server.Features.Posts.Models;
     using MySocialMedia.Server.Infrastructure;
 

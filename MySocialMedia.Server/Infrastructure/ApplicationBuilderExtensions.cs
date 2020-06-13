@@ -15,5 +15,14 @@
 
             dbcontext.Database.Migrate();
         }
+
+        public static IApplicationBuilder UseSwaggerUI(this IApplicationBuilder app)
+            => app
+                .UseSwagger()
+                .UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "My Social Media API v1");
+                    options.RoutePrefix = string.Empty;
+                });
     }
 }

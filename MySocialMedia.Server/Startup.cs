@@ -27,6 +27,7 @@ namespace MySocialMedia.Server
                 .AddIdentity()
                 .AddJwtAuthentication(appSettings)
                 .AddApplicationServices()
+                .AddSwagger()
                 .AddControllers();
         }
 
@@ -38,18 +39,20 @@ namespace MySocialMedia.Server
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting()
-               .UseCors(options => options
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader())
-               .UseAuthentication()
-               .UseAuthorization()
-               .UseEndpoints(endpoints => 
-               { 
-                   endpoints.MapControllers(); }
-               )
-               .ApplyMigrations();
+            app
+                .UseSwaggerUI()
+                .UseRouting()
+                .UseCors(options => options
+                     .AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader())
+                .UseAuthentication()
+                .UseAuthorization()
+                .UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllers();
+                })
+                .ApplyMigrations();
         }
     }
 }
