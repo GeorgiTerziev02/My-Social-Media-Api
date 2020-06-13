@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-namespace MySocialMedia.Server.Models.Posts
+﻿namespace MySocialMedia.Server.Features.Posts.Models
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -8,7 +6,6 @@ namespace MySocialMedia.Server.Models.Posts
 
     public class CreatePostRequestModel
     {
-        [Required]
         [MaxLength(MaxDescriptionLength)]
         public string Description { get; set; }
 

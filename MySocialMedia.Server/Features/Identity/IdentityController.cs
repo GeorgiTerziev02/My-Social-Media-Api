@@ -1,11 +1,11 @@
-﻿namespace MySocialMedia.Server.Controllers
+﻿namespace MySocialMedia.Server.Features.Identity
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
     using MySocialMedia.Server.Data.Models;
-    using MySocialMedia.Server.Models.Identity;
+    using MySocialMedia.Server.Features.Identity.Models;
     using System;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
@@ -15,13 +15,16 @@
     public class IdentityController : ApiController
     {
         private readonly UserManager<User> userManager;
+        private readonly IIdentityService identityService;
         private readonly ApplicationSettings applicationSettings;
 
         public IdentityController(
             UserManager<User> userManager,
+            IIdentityService identityService,
             IOptions<ApplicationSettings> applicationSettings)
         {
             this.userManager = userManager;
+            this.identityService = identityService;
             this.applicationSettings = applicationSettings.Value;
         }
 
@@ -61,25 +64,14 @@
                 return this.Unauthorized();
             }
 
-            // authentication successful so generate jwt token
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(this.applicationSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(ClaimTypes.Name, user.UserName)
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var encryptedToken = tokenHandler.WriteToken(token);
+            var token = this.identityService.GenerateJwtToken(
+                user.Id,
+                user.UserName,
+                this.applicationSettings.Secret);
 
-            return new
+            return new LoginResponseModel
             {
-                Token = encryptedToken
+                Token = token
             };
         }
     }

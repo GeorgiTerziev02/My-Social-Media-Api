@@ -1,4 +1,4 @@
-﻿namespace MySocialMedia.Server.Models.Identity
+﻿namespace MySocialMedia.Server.Features.Identity.Models
 {
     using System.ComponentModel.DataAnnotations;
 

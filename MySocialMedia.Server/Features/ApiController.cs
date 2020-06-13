@@ -1,4 +1,4 @@
-﻿namespace MySocialMedia.Server.Controllers
+﻿namespace MySocialMedia.Server.Features
 {
     using Microsoft.AspNetCore.Mvc;
 
