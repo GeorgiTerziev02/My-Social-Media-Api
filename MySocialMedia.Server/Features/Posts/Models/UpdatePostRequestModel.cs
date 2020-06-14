@@ -2,15 +2,14 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Data.Validation.Post;
+    using static MySocialMedia.Server.Data.Validation.Post;
 
-    public class CreatePostRequestModel
+    public class UpdatePostRequestModel
     {
+        public int Id { get; set; }
+
         [Required]
         [MaxLength(MaxDescriptionLength)]
         public string Description { get; set; }
-
-        [Required]
-        public string ImageUrl { get; set; }
     }
 }

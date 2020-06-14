@@ -33,6 +33,21 @@
             return post.Id;
         }
 
+        public async Task<bool> Delete(int id, string userId)
+        {
+            var post = await this.GetByIdAndUserId(id, userId);
+
+            if (post == null)
+            {
+                return false;
+            }
+
+            this.data.Remove(post);
+            await this.data.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<PostDetailsServiceModel> Details(int id)
             => await this.data
                 .Posts
@@ -56,5 +71,27 @@
                      ImageUrl = p.ImageUrl
                  })
                  .ToListAsync();
+
+        public async Task<bool> Update(int id, string description, string userId)
+        {
+            var post = await this.GetByIdAndUserId(id, userId);
+
+            if (post == null)
+            {
+                return false;
+            }
+
+            post.Description = description;
+
+            await this.data.SaveChangesAsync();
+
+            return true;
+        }
+
+        private async Task<Post> GetByIdAndUserId(int id, string userId)
+            => await this.data
+                .Posts
+                .Where(c => c.Id == id && c.UserId == userId)
+                .FirstOrDefaultAsync();
     }
 }

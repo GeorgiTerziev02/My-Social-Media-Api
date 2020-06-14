@@ -6,6 +6,7 @@
 
     public class Post
     {
+        // TODO: Add created on
         public int Id { get; set; }
 
         [Required]
