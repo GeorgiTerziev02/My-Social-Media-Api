@@ -1,12 +1,12 @@
 ﻿namespace MySocialMedia.Server.Data.Models
 {
+    using MySocialMedia.Server.Data.Models.Base;
     using System.ComponentModel.DataAnnotations;
 
     using static Validation.Post;
 
-    public class Post
+    public class Post : DeletetableEntity
     {
-        // TODO: Add created on
         public int Id { get; set; }
 
         [Required]
