@@ -3,21 +3,20 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MySocialMedia.Server.Data.Migrations
 {
-    public partial class AuditINfo : Migration
+    public partial class AuditInfo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
                 name: "CreatedBy",
                 table: "Posts",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "CreatedOn",
                 table: "Posts",
                 nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                defaultValue: new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
 
             migrationBuilder.AddColumn<string>(
                 name: "DeletedBy",
@@ -48,8 +47,7 @@ namespace MySocialMedia.Server.Data.Migrations
             migrationBuilder.AddColumn<string>(
                 name: "CreatedBy",
                 table: "AspNetUsers",
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
                 name: "CreatedOn",

@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20200721143727_AuditINfo.cs" />
+    <Compile Remove="Data\Migrations\20200721143727_AuditINfo.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200721150654_AuditInfoCreatedByNotRequired.cs" />
+    <Compile Remove="Data\Migrations\20200721150654_AuditInfoCreatedByNotRequired.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200721161201_AuditInfo.cs" />
+    <Compile Remove="Data\Migrations\20200721161201_AuditInfo.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200721161355_AuditInfo.cs" />
+    <Compile Remove="Data\Migrations\20200721161355_AuditInfo.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.4" />

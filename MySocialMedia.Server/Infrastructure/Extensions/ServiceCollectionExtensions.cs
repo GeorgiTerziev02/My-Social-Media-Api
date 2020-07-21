@@ -12,6 +12,7 @@
     using MySocialMedia.Server.Features.Identity;
     using MySocialMedia.Server.Features.Posts;
     using MySocialMedia.Server.Infrastructure.Filters;
+    using MySocialMedia.Server.Infrastructure.Services;
     using System.Text;
 
     public static class ServiceCollectionExtensions
@@ -85,6 +86,7 @@
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
+                .AddScoped<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IPostsService, PostsService>();
 

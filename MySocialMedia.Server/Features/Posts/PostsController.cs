@@ -2,27 +2,31 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using MySocialMedia.Server.Features.Posts.Models;
     using MySocialMedia.Server.Infrastructure.Extensions;
-
+    using MySocialMedia.Server.Infrastructure.Services;
     using static Infrastructure.WebConstants;
 
     [Authorize]
     public class PostsController : ApiController
     {
         private readonly IPostsService postsService;
+        private readonly ICurrentUserService currentUser;
 
-        public PostsController(IPostsService postsService)
+        public PostsController(IPostsService postsService, ICurrentUserService currentUser)
         {
             this.postsService = postsService;
+            this.currentUser = currentUser;
         }
 
         [HttpGet]
         public async Task<IEnumerable<PostListingServiceModel>> MyPosts()
         {
-            var userId = this.User.GetId();
+            var userId = this.currentUser.GetId();
 
             return await this.postsService.PostsByUser(userId);
         }
@@ -35,7 +39,7 @@
         [HttpPost]
         public async Task<ActionResult> Create(CreatePostRequestModel model)
         {
-            var userId = this.User.GetId();
+            var userId = this.currentUser.GetId();
 
             var postId = await this.postsService.Create(model.Description, model.ImageUrl, userId);
 
@@ -45,7 +49,7 @@
         [HttpPut]
         public async Task<ActionResult> Update(UpdatePostRequestModel model)
         {
-            var userId = this.User.GetId();
+            var userId = this.currentUser.GetId();
 
             var updated = await this.postsService.Update(model.Id, model.Description, userId);
 
@@ -61,7 +65,7 @@
         [Route(RouteId)]
         public async Task<ActionResult> Delete(int id)
         {
-            var userId = this.User.GetId();
+            var userId = this.currentUser.GetId();
 
             var deleted = await this.postsService.Delete(id, userId);
 

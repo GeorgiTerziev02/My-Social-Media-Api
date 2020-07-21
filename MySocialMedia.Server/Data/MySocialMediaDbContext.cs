@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using MySocialMedia.Server.Data.Models;
     using MySocialMedia.Server.Data.Models.Base;
+    using MySocialMedia.Server.Infrastructure.Services;
     using System;
     using System.Linq;
     using System.Threading;
@@ -11,32 +12,23 @@
 
     public class MySocialMediaDbContext : IdentityDbContext<User>
     {
-        public MySocialMediaDbContext(DbContextOptions<MySocialMediaDbContext> options)
+        private readonly ICurrentUserService currentUser;
+
+        public MySocialMediaDbContext(
+            DbContextOptions<MySocialMediaDbContext> options,
+            ICurrentUserService currentUser)
             : base(options)
         {
+            this.currentUser = currentUser;
         }
 
         public DbSet<Post> Posts { get; set; }
-
-        public override int SaveChanges()
-        {
-            this.ApplyAuditInformation();
-
-            return base.SaveChanges();
-        }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             this.ApplyAuditInformation();
 
             return base.SaveChanges(acceptAllChangesOnSuccess);
-        }
-
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            this.ApplyAuditInformation();
-
-            return base.SaveChangesAsync(cancellationToken);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
@@ -50,6 +42,7 @@
         {
             builder
                 .Entity<Post>()
+                .HasQueryFilter(c => !c.IsDeleted)
                 .HasOne(p => p.User)
                 .WithMany(u => u.Posts)
                 .HasForeignKey(p => p.UserId)
@@ -61,32 +54,36 @@
         private void ApplyAuditInformation()
             => this.ChangeTracker
                 .Entries()
-                .Where(entry => entry.Entity is IEntity)
-                .Select(entry => new
-                {
-                    entry.Entity,
-                    entry.State
-                })
                 .ToList()
                 .ForEach(entry =>
                 {
+                    var userName = this.currentUser.GetUserName();
+
                     if (entry.Entity is IDeletableEntity deletableEntity)
                     {
                         if (entry.State == EntityState.Deleted)
                         {
                             deletableEntity.DeletedOn = DateTime.UtcNow;
+                            deletableEntity.DeletedBy = userName;
                             deletableEntity.IsDeleted = true;
+
+                            entry.State = EntityState.Modified;
+
+                            return;
                         }
                     }
-                    else if (entry.Entity is IEntity entity)
+
+                    if (entry.Entity is IEntity entity)
                     {
                         if (entry.State == EntityState.Added)
                         {
                             entity.CreatedOn = DateTime.UtcNow;
+                            entity.CreatedBy = userName;
                         }
                         else if (entry.State == EntityState.Modified)
                         {
                             entity.ModifiedOn = DateTime.UtcNow;
+                            entity.ModifiedBy = userName;
                         }
                     }
                 });

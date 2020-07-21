@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Identity;
+    using MySocialMedia.Server.Data.Models.Base;
 
-    public class User : IdentityUser
+    public class User : IdentityUser, IEntity
     {
         public DateTime CreatedOn { get; set; }
 
-        [Required]
         public string CreatedBy { get; set; }
 
         public DateTime? ModifiedOn { get; set; }

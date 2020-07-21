@@ -10,8 +10,8 @@ using MySocialMedia.Server.Data;
 namespace MySocialMedia.Server.Data.Migrations
 {
     [DbContext(typeof(MySocialMediaDbContext))]
-    [Migration("20200721143727_AuditINfo")]
-    partial class AuditINfo
+    [Migration("20200721161438_AuditInfo")]
+    partial class AuditInfo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -160,7 +160,6 @@ namespace MySocialMedia.Server.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -214,7 +213,6 @@ namespace MySocialMedia.Server.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
