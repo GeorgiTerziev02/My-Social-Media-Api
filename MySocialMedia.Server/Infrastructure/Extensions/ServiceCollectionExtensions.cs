@@ -11,6 +11,7 @@
     using MySocialMedia.Server.Data.Models;
     using MySocialMedia.Server.Features.Identity;
     using MySocialMedia.Server.Features.Posts;
+    using MySocialMedia.Server.Features.Profiles;
     using MySocialMedia.Server.Infrastructure.Filters;
     using MySocialMedia.Server.Infrastructure.Services;
     using System.Text;
@@ -87,6 +88,7 @@
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
             => services
                 .AddScoped<ICurrentUserService, CurrentUserService>()
+                .AddTransient<IProfileService, ProfileService>()
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<IPostsService, PostsService>();
 

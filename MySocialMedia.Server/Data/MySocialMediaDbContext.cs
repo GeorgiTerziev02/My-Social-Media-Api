@@ -48,6 +48,10 @@
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder
+                .Entity<User>()
+                .OwnsOne(u => u.Profile);
+
             base.OnModelCreating(builder);
         }
 

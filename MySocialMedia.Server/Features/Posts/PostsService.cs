@@ -65,6 +65,7 @@
         public async Task<IEnumerable<PostListingServiceModel>> PostsByUser(string userId)
             => await this.data.Posts
                  .Where(p => p.UserId == userId)
+                 .OrderByDescending(c => c.CreatedOn)
                  .Select(p => new PostListingServiceModel
                  {
                      Id = p.Id,
