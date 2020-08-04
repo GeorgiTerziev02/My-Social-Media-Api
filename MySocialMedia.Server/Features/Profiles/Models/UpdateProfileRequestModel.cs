@@ -1,16 +1,16 @@
-﻿namespace MySocialMedia.Server.Data.Models
+﻿namespace MySocialMedia.Server.Features.Profiles.Models
 {
+    using MySocialMedia.Server.Data.Models;
     using System.ComponentModel.DataAnnotations;
 
-    using static Validation.User;
+    using static Data.Validation.User;
 
-    public class Profile
+    public class UpdateProfileRequestModel
     {
-        [Key]
-        [Required]
-        public string UserId { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
-        public User User { get; set; }
+        public string UserName { get; set; }
 
         [MaxLength(MaxNameLength)]
         public string Name { get; set; }

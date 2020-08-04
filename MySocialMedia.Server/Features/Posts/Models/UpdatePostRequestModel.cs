@@ -6,8 +6,6 @@
 
     public class UpdatePostRequestModel
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(MaxDescriptionLength)]
         public string Description { get; set; }

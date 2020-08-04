@@ -43,15 +43,16 @@
 
             var postId = await this.postsService.Create(model.Description, model.ImageUrl, userId);
 
-            return Created(nameof(this.Create), postId);
+            return this.Created(nameof(this.Create), postId);
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(UpdatePostRequestModel model)
+        [Route(RouteId)]
+        public async Task<ActionResult> Update(int id, UpdatePostRequestModel model)
         {
             var userId = this.currentUser.GetId();
 
-            var updated = await this.postsService.Update(model.Id, model.Description, userId);
+            var updated = await this.postsService.Update(id, model.Description, userId);
 
             if (!updated)
             {
