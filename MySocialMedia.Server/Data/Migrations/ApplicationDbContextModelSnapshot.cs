@@ -198,6 +198,36 @@ namespace MySocialMedia.Server.Data.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("MySocialMedia.Server.Data.Models.Profile", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Biography")
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MainPhotoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(40)")
+                        .HasMaxLength(40);
+
+                    b.Property<string>("WebSite")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("Profiles");
+                });
+
             modelBuilder.Entity("MySocialMedia.Server.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -335,40 +365,13 @@ namespace MySocialMedia.Server.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MySocialMedia.Server.Data.Models.User", b =>
+            modelBuilder.Entity("MySocialMedia.Server.Data.Models.Profile", b =>
                 {
-                    b.OwnsOne("MySocialMedia.Server.Data.Models.Profile", "Profile", b1 =>
-                        {
-                            b1.Property<string>("UserId")
-                                .HasColumnType("nvarchar(450)");
-
-                            b1.Property<string>("Biography")
-                                .HasColumnType("nvarchar(150)")
-                                .HasMaxLength(150);
-
-                            b1.Property<int>("Gender")
-                                .HasColumnType("int");
-
-                            b1.Property<bool>("IsPrivate")
-                                .HasColumnType("bit");
-
-                            b1.Property<string>("MainPhotoUrl")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Name")
-                                .HasColumnType("nvarchar(40)")
-                                .HasMaxLength(40);
-
-                            b1.Property<string>("WebSite")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("AspNetUsers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
+                    b.HasOne("MySocialMedia.Server.Data.Models.User", "User")
+                        .WithOne("Profile")
+                        .HasForeignKey("MySocialMedia.Server.Data.Models.Profile", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

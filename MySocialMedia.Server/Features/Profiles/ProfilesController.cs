@@ -25,7 +25,34 @@
         {
             var userId = this.currentUser.GetId();
 
-            return await this.profileService.ByUser(userId);
+            var result = await this.profileService.ByUser(userId);
+
+            return result;
+        }
+
+        [HttpPut]
+        [Authorize]
+        public async Task<ActionResult> Update(UpdateProfileRequestModel model)
+        {
+            var userId = this.currentUser.GetId();
+
+            var result = await this.profileService.Update(
+                userId,
+                model.Email,
+                model.UserName,
+                model.Name,
+                model.MainPhotoUrl,
+                model.WebSite,
+                model.Biography,
+                model.Gender,
+                model.IsPrivate);
+
+            if (!result.Succeded)
+            {
+                return this.BadRequest(result.Error);
+            }
+
+            return this.Ok();
         }
     }
 }
