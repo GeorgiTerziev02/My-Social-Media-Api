@@ -13,6 +13,7 @@
     using MySocialMedia.Server.Features.Identity;
     using MySocialMedia.Server.Features.Posts;
     using MySocialMedia.Server.Features.Profiles;
+    using MySocialMedia.Server.Features.Search;
     using MySocialMedia.Server.Infrastructure.Filters;
     using MySocialMedia.Server.Infrastructure.Services;
     using System.Text;
@@ -91,6 +92,7 @@
                 .AddScoped<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IProfileService, ProfileService>()
                 .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<ISearchService, SearchService>()
                 .AddTransient<IFollowsService, FollowsService>()
                 .AddTransient<IPostsService, PostsService>();
 
