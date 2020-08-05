@@ -24,6 +24,8 @@
     <Compile Remove="Data\Migrations\20200804144830_UserProfiles.Designer.cs" />
     <Compile Remove="Data\Migrations\20200804150138_UserProfiles.cs" />
     <Compile Remove="Data\Migrations\20200804150138_UserProfiles.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200805133617_AddFollows.cs" />
+    <Compile Remove="Data\Migrations\20200805133617_AddFollows.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,7 +20,6 @@
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<ProfileServiceModel>> MyProfile()
         {
             var userId = this.currentUser.GetId();
@@ -31,7 +30,6 @@
         }
 
         [HttpPut]
-        [Authorize]
         public async Task<ActionResult> Update(UpdateProfileRequestModel model)
         {
             var userId = this.currentUser.GetId();

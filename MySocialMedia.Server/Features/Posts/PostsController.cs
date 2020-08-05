@@ -3,15 +3,12 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using MySocialMedia.Server.Features.Posts.Models;
-    using MySocialMedia.Server.Infrastructure.Extensions;
     using MySocialMedia.Server.Infrastructure.Services;
     using static Infrastructure.WebConstants;
 
-    [Authorize]
     public class PostsController : ApiController
     {
         private readonly IPostsService postsService;
