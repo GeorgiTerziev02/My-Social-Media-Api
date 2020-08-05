@@ -9,6 +9,7 @@
     using Microsoft.OpenApi.Models;
     using MySocialMedia.Server.Data;
     using MySocialMedia.Server.Data.Models;
+    using MySocialMedia.Server.Features.Follows;
     using MySocialMedia.Server.Features.Identity;
     using MySocialMedia.Server.Features.Posts;
     using MySocialMedia.Server.Features.Profiles;
@@ -90,6 +91,7 @@
                 .AddScoped<ICurrentUserService, CurrentUserService>()
                 .AddTransient<IProfileService, ProfileService>()
                 .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<IFollowsService, FollowsService>()
                 .AddTransient<IPostsService, PostsService>();
 
         public static IServiceCollection AddSwagger(this IServiceCollection services)
