@@ -47,7 +47,7 @@
                 model.Gender,
                 model.IsPrivate);
 
-            if (!result.Succeded)
+            if (result.Failure)
             {
                 return this.BadRequest(result.Error);
             }

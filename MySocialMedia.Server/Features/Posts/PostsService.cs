@@ -4,6 +4,7 @@
     using MySocialMedia.Server.Data;
     using MySocialMedia.Server.Data.Models;
     using MySocialMedia.Server.Features.Posts.Models;
+    using MySocialMedia.Server.Infrastructure.Services;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -33,13 +34,13 @@
             return post.Id;
         }
 
-        public async Task<bool> Delete(int id, string userId)
+        public async Task<Result> Delete(int id, string userId)
         {
             var post = await this.GetByIdAndUserId(id, userId);
 
             if (post == null)
             {
-                return false;
+                return "This user cannot delete this cat.";
             }
 
             this.data.Remove(post);
@@ -73,13 +74,13 @@
                  })
                  .ToListAsync();
 
-        public async Task<bool> Update(int id, string description, string userId)
+        public async Task<Result> Update(int id, string description, string userId)
         {
             var post = await this.GetByIdAndUserId(id, userId);
 
             if (post == null)
             {
-                return false;
+                return "This user cannot edit this post.";
             }
 
             post.Description = description;

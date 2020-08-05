@@ -52,11 +52,11 @@
         {
             var userId = this.currentUser.GetId();
 
-            var updated = await this.postsService.Update(id, model.Description, userId);
+            var result = await this.postsService.Update(id, model.Description, userId);
 
-            if (!updated)
+            if (result.Failure)
             {
-                return this.BadRequest();
+                return this.BadRequest(result.Error);
             }
 
             return this.Ok();
@@ -68,11 +68,11 @@
         {
             var userId = this.currentUser.GetId();
 
-            var deleted = await this.postsService.Delete(id, userId);
+            var result = await this.postsService.Delete(id, userId);
 
-            if (!deleted)
+            if (result.Failure)
             {
-                return this.BadRequest();
+                return this.BadRequest(result.Error);
             }
 
             return this.Ok();
